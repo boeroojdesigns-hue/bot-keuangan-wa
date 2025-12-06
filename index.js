@@ -3,7 +3,7 @@ const { MongoStore } = require('wwebjs-mongo');
 const mongoose = require('mongoose');
 const qrcode = require('qrcode-terminal');
 const axios = require('axios');
-const express = require('express'); // Wajib untuk Replit
+const express = require('express'); 
 
 // --- SERVER PENGHALANG TIDUR (KEEP-ALIVE) ---
 const app = express();
@@ -58,8 +58,11 @@ mongoose.connect(MONGO_URI).then(() => {
 
     client.on('message', async msg => {
         const text = msg.body;
+        const cmd = text.toLowerCase();
         
-        if (text.toLowerCase().startsWith('masuk ') || text.toLowerCase().startsWith('keluar ')) {
+        // Deteksi pesan: Masuk, Keluar, atau Cek Saldo
+        if (cmd.startsWith('masuk ') || cmd.startsWith('keluar ') || cmd === 'cek saldo') {
+            
             const chat = await msg.getChat();
             console.log(`Pesan dari ${msg.from}: ${text}`);
 
@@ -74,7 +77,7 @@ mongoose.connect(MONGO_URI).then(() => {
                 }
             } catch (error) {
                 console.error("Gagal kirim ke Google Sheet:", error.message);
-                msg.reply('⚠️ Gagal mencatat. Cek server.');
+                msg.reply('⚠️ Gagal menghubungi server database.');
             }
         }
     });
