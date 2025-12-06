@@ -1,0 +1,13 @@
+services:
+  - type: web
+    name: bot-keuangan-wa
+    env: node
+    plan: free
+    region: singapore
+    buildCommand: npm install
+    startCommand: node index.js
+    envVars:
+      - key: GAS_URL
+        sync: false
+      - key: MONGO_URI
+        sync: false
