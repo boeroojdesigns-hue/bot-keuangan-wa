@@ -60,8 +60,13 @@ mongoose.connect(MONGO_URI).then(() => {
         const text = msg.body;
         const cmd = text.toLowerCase();
         
-        // Deteksi pesan: Masuk, Keluar, atau Cek Saldo
-        if (cmd.startsWith('masuk ') || cmd.startsWith('keluar ') || cmd === 'cek saldo') {
+        // Command yang diizinkan: Masuk, Keluar, Cek Saldo, Help/Menu
+        if (cmd.startsWith('masuk ') || 
+            cmd.startsWith('keluar ') || 
+            cmd === 'cek saldo' || 
+            cmd === 'help' || 
+            cmd === 'menu' || 
+            cmd === 'bantuan') {
             
             const chat = await msg.getChat();
             console.log(`Pesan dari ${msg.from}: ${text}`);
